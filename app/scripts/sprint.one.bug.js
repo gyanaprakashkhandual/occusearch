@@ -1,4 +1,3 @@
-
 let allBugs = [];
 let filteredBugs = [];
 let currentFilterField = null;
@@ -36,14 +35,10 @@ function renderTable() {
         <td>${bug.bugType}</td>
         <td>${bug.bugDescription}</td>
         <td>${bug.bugRequirement}</td>
-        <td><span class="priority-${bug.bugPriority.toLowerCase()}">${bug.bugPriority
-                }</span></td>
-        <td><span class="status-${bug.bugStatus
-                    .toLowerCase()
-                    .replace(" ", "-")}">${bug.bugStatus}</span></td>
-    <td><img src="${bug.bugReportedBy
-                }" alt="Reporter" class="profile-img" title="Reported by"></td>
-</tr>
+        <td><span class="priority-${bug.bugPriority.toLowerCase()}">${bug.bugPriority}</span></td>
+        <td><span class="status-${bug.bugStatus.toLowerCase().replace(" ", "-")}">${bug.bugStatus}</span></td>
+        <td><img src="${bug.bugReportedBy}" alt="Reporter" class="profile-img" title="Reported by"></td>
+    </tr>
 `
         )
         .join("");
@@ -64,15 +59,13 @@ function populateDropdowns() {
         const uniqueValues = [
             ...new Set(allBugs.map((bug) => bug[field])),
         ].sort();
-        const dropdown = document.getElementById(`${field} Dropdown`);
+        const dropdown = document.getElementById(`${field}Dropdown`);
         const list = dropdown.querySelector(".dropdown-list");
         const input = dropdown.querySelector(".dropdown-input");
 
         list.innerHTML = uniqueValues
             .map(
-                (value) => `
-    < div class="dropdown-item" onclick = "filterByValue('${field}', '${value}')" > ${value}</ >
-        `
+                (value) => `<div class="dropdown-item" onclick="filterByValue('${field}', '${value}')">${value}</div>`
             )
             .join("");
 
@@ -84,22 +77,16 @@ function populateDropdowns() {
         );
     });
 
-    const reportedByDropdown = document.getElementById(
-        "bugReportedByDropdown"
-    );
-    const reportedByList =
-        reportedByDropdown.querySelector(".dropdown-list");
-    const reportedByInput =
-        reportedByDropdown.querySelector(".dropdown-input");
+    const reportedByDropdown = document.getElementById("bugReportedByDropdown");
+    const reportedByList = reportedByDropdown.querySelector(".dropdown-list");
+    const reportedByInput = reportedByDropdown.querySelector(".dropdown-input");
 
     const uniqueReporters = [
         ...new Set(allBugs.map((bug) => bug.bugReportedBy)),
     ];
     reportedByList.innerHTML = uniqueReporters
         .map(
-            (reporter) => `
-        < div class="dropdown-item" onclick = "filterByValue('bugReportedBy', '${reporter}')" > <img src="${reporter}" style="width: 20px; height: 20px; border-radius: 50%; margin-right: 8px;"> ${reporter}</>
-`
+            (reporter) => `<div class="dropdown-item" onclick="filterByValue('bugReportedBy', '${reporter}')"><img src="${reporter}" style="width: 20px; height: 20px; border-radius: 50%; margin-right: 8px;">${reporter}</div>`
         )
         .join("");
 
@@ -122,7 +109,7 @@ function populateDropdowns() {
 function openDropdown(event, field) {
     event.preventDefault();
     closeAllDropdowns();
-    const dropdown = document.getElementById(`${field} Dropdown`);
+    const dropdown = document.getElementById(`${field}Dropdown`);
     const button = event.target.closest("button");
     const rect = button.getBoundingClientRect();
 
@@ -202,7 +189,7 @@ function updateClearButtons() {
         "bugReportedBy",
     ];
     fields.forEach((field) => {
-        const btn = document.getElementById(`${field} Clear`);
+        const btn = document.getElementById(`${field}Clear`);
         btn.disabled = !filters[field];
     });
 }
